@@ -4,6 +4,7 @@
     :books="books"
     @add-book-list="addBook"
     @update-book-info="updateBookInfo"
+    @delete-local-storage="deleteLocalStorage"
     />
   </div>
 </template>
@@ -62,6 +63,15 @@ export default {
             this.books.splice(e.id, 1, updateInfo);
             this.saveBooks();
             this.$router.push('/book');
+        },
+        deleteLocalStorage() {
+            const isDeleted = '本当に削除してもよろしいでしょうか？'
+            if (window.confirm(isDeleted)) {
+                localStorage.setItem(STORAGE_KEY, '')
+                localStorage.removeItem(STORAGE_KEY)
+                this.books = []
+                window.location.reload()
+            }
         }
     }
 }
